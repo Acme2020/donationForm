@@ -1,143 +1,113 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Sicher spenden!</title>
-</head>
+        <title>Sicher spenden!</title>
+    </head>
 
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                One of three columns
-            </div>
-            <div class="col-md-8 ml-3 ml-md-0">
-                <form name="donatioForm" id="donationForm" class="needs-validation" novalidate>
-                    <input type="hidden" value="https://www.alsterdorf.de/" name="ret_success_url" />
-                    <input type="hidden" value="https://www.marvel.com/404" name="ret_error_url" />
-                    <input type="hidden" name="oid" value="" />
-                    <fieldset class="tab">
-                        <div class="row mt-4">
-                            <h5>Betrag</h5>
-                        </div>
-                        <div class="row form-group align-items-center validate">
-                            <div class="col-md-1 custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="predefined_amount" id="amount_small" value="10" required/>
-                                <label class="custom-control-label" for="amount_small"> 10€ </label>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ml-3 ml-md-0">
+                    <form name="donatioForm" id="donationForm" class="needs-validation" novalidate onsubmit="return validateForm()" method="post" target="_blank" action="https://secure.spendenbank.de/bfs-net/api/" >
+                        <input type="hidden" name="ret_success_url" value="https://www.alsterdorf.de/" />
+                        <input type="hidden" name="ret_error_url" value="https://www.marvel.com/404" />
+                        <input type="hidden" name="oid" value="" />
+                        <input type="hidden" name="anschrift_erforderlich" value="0" />
+                        <fieldset class="tab">
+                            <div class="row mt-4">
+                                <h5>Betrag</h5>
                             </div>
-                            <div class="col-md-1 custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="predefined_amount" id="amount_mid" value="20" required/>
-                                <label class="custom-control-label" for="amount_mid"> 20€ </label>
-                            </div>
-                            <div class="col-md-1 custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="predefined_amount" id="amount_big" value="50" required/>
-                                <label class="custom-control-label" for="amount_big"> 50€ </label>
-                            </div>
-                            <div class="col-md-auto custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="predefined_amount" id="amount_own_radio" required/>
-                                <label class="custom-control-label" for="amount_own_radio">
-                                    Eigener Betrag
-                                </label>
-                            </div>
-                            <div class="input-group input-group-sm col-md-2 pl-0">
-                                <input placeholder="Betrag" type="text" class="form-control col-form-label-sm" id="amount_own" name="donation_amount" maxlength="5"
-                                    data-rule-required="true" contenteditable="false" value="">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">€</span>
+                            <div class="row form-group align-items-center validate" id="amountInput">
+                                <div class="col-md-1 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="betrag" id="amount_small" value="10"  onclick="clearAmountInput()" required/>
+                                    <label class="custom-control-label" for="amount_small"> 10€ </label>
                                 </div>
-                            </div>
-                            <input type="radio" name="predefined_amount" style="display:none;">
-                            <div class="invalid-feedback">
-                                Bitte wählen Sie einen Betrag
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <h5>Spendenrythmus</h5>
-                        </div>
-                        <div class="row form-group align-items-center validate">
-                            <div class="col-md-2 custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="get_rhythmus" id="rhythmus1" value="einmalig" required />
-                                <label class="custom-control-label" for="rhythmus1"> einmalig </label>
-                            </div>
-                            <div class="col-md-2 custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="get_rhythmus" id="rhythmus2" value="monatlich" required />
-                                <label class="custom-control-label" for="rhythmus2"> monatlich </label>
-                            </div>
-                            <div class="col-md-2 custom-control custom-radio">
-                                <input class="custom-control-input" type="radio" name="get_rhythmus" id="rhythmus3" value="jährlich" required />
-                                <label class="custom-control-label" for="rhythmus3"> jährlich </label>
-                            </div>
-                            <input type="radio" name="get_rhythmus" style="display:none;">
-                            <div class="invalid-feedback">
-                                Bitte geben sie Ihre gewünschte Spendenhäufigkeit an
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <h5>Projekt</h5>
-                        </div>
-                        <div class="row align-items-center">
-                            <div>
-                                <select class="custom-select" name="verwendungszweck" id="verwendungszweck" onchange="toggleVWZ(id)"></select>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-4 validate" id="vwz_open" style="display:none;">
-                            <div class="col-md-4 pl-0">
-                                <label for="vwz">Eigener Verwendungszweck</label>
-                                <input class="form-control" type="text" name="donation_openvz" id="donation_openvz" value="" />
+                                <div class="col-md-1 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="betrag" id="amount_mid" value="20" onclick="clearAmountInput()" required/>
+                                    <label class="custom-control-label" for="amount_mid"> 20€ </label>
+                                </div>
+                                <div class="col-md-1 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="betrag" id="amount_big" value="50"  onclick="clearAmountInput()" required/>
+                                    <label class="custom-control-label" for="amount_big"> 50€ </label>
+                                </div>
+                                <div class="col-md-auto custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="betrag" id="amount_own_radio" value="" onclick="requireInput()"/>
+                                    <label class="custom-control-label" for="amount_own_radio">
+                                        Eigener Betrag
+                                    </label>
+                                </div>
+                                <div class="input-group input-group-sm col-md-2 w-25 pl-0">
+                                    <input placeholder="Betrag" type="text" class="form-control" id="amount_own" name="amount_own" max-length = "5"
+                                        data-rule-required="true" contenteditable="false" value="" onfocus="checkRadioBtn()" onchange="changeRadioValue()">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
+                                <input type="radio" name="betrag" style="display:none"/>
                                 <div class="invalid-feedback">
-                                    Bitte geben Sie einen verwendungszweck an
+                                    Bitte wählen Sie einen Betrag zwischen 1€ und 5.000€
                                 </div>
+                                <small class="form-text text-muted">max. 5.000€</small>
                             </div>
-                        </div>   
-                    </fieldset>
-                    <fieldset class="tab" style="display:none">
-                        <div class="row mt-4">
-                            <h5>Adressdaten</h5>
-                        </div>
-                        <div class="row align-items-center mt-4 validate" id="emailCheck">
-                            <div class="col-md-1 pl-0">
-                                <label class="col-form-label" for="email">Email</label>
+                            <div class="row mt-4">
+                                <h5>Spendenrythmus</h5>
                             </div>
-                            <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                <input class="form-control" type="text" name="email" id="email" value="" required />
+                            <div class="row form-group align-items-center validate">
+                                <div class="col-md-2 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="sepa_rhythmus" id="rhythmus1" value="1" required />
+                                    <label class="custom-control-label" for="rhythmus1"> einmalig </label>
+                                </div>
+                                <div class="col-md-2 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="sepa_rhythmus" id="rhythmus2" value="2" required />
+                                    <label class="custom-control-label" for="rhythmus2"> monatlich </label>
+                                </div>
+                                <div class="col-md-2 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" name="sepa_rhythmus" id="rhythmus3" value="3" required />
+                                    <label class="custom-control-label" for="rhythmus3"> jährlich </label>
+                                </div>
+                                <input type="radio" name="get_rhythmus" style="display:none">
                                 <div class="invalid-feedback">
-                                    Bitte geben Sie eine gültige E-Mail Adresse an
+                                    Bitte geben sie Ihre gewünschte Spendenhäufigkeit an
                                 </div>
                             </div>
-                        </div>
-                        <div class="row align-items-center mt-4">
-                            <div class="col-md-3 pl-0">
-                                <label for="input_get_quittung">Spendenquittung</label>
+                            <div class="row mt-4">
+                                <h5>Projekt</h5>
                             </div>
-                            <div class="col-md-2 pl-0 pl-md-3 pr-3 pr-md-0">
-                                <select class="custom-select" name="get_quittung" id="input_get_quittung" onchange="toggleAddressData(id);">
-                                    <option value="ja" data-value="1">ja</option>
-                                    <option value="nein" data-value="0">nein</option>
-                                </select>
+                            <div class="row align-items-center">
+                                <div>
+                                    <select class="custom-select" name="verwendungszweck" id="verwendungszweck" onchange="toggleVWZ(id)"></select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 pl-0 mt-1">
-                                <small>Ab 50€ möglich. Bis 200€ genügt der Kontoauszug zur Vorlage beim
-                                        Finanzamt
-                                </small>
+                            <div class="row align-items-center mt-4 validate" id="vwz_open" style="display:none">
+                                <div class="col-md-4 pl-0">
+                                    <label for="donation_openvz">Eigener Verwendungszweck</label>
+                                    <input class="form-control" type="text" name="donation_openvz" id="donation_openvz" value="" />
+                                    <div class="invalid-feedback">
+                                        Bitte geben Sie einen verwendungszweck an
+                                    </div>
+                                </div>
+                            </div>   
+                        </fieldset>
+                        <fieldset class="tab" style="display:none">
+                            <div class="row mt-4">
+                                <h5>Adressdaten</h5>
                             </div>
-                        </div>
-                        <div id="masterData">
                             <div class="row align-items-center mt-4">
-                                <div class="col-md-2 custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" id="person_radio" name="entity" checked="checked" onclick="toggleEntity(id);">
-                                    <label class="custom-control-label" for="person_radio"> Person</label> 
+                                <div class="col-md-1 custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="person_radio" name="entity" checked="checked"
+                                        onclick="toggleEntity(id);">
+                                    <label class="custom-control-label" for="person_radio"> Person</label>
                                 </div>
-                                <div class="col-md-2 custom-control custom-radio">
+                                <div class="col-md-1 custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="firma_radio" name="entity" onclick="toggleEntity(id);">
                                     <label class="custom-control-label" for="firma_radio"> Firma</label>
                                 </div>
@@ -149,7 +119,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                    <input type="text" class="form-control" id="firma" name="firma" value="" required/>
+                                    <input type="text" class="form-control" id="firma" name="firma" value="" required />
                                     <div class="invalid-feedback">
                                         Bitte geben Sie einen Firmennamen an
                                     </div>
@@ -163,412 +133,483 @@
                                     <input type="text" class="form-control" id="firma_zusatz" name="firma_zusatz" value="" />
                                 </div>
                             </div>
-                            <div class="align-items-center mt-4 validate" id="addressData">
-                                <div class="row align-items-center mt-"4 >
-                                    <div class="col-md-1 pl-0">
-                                        <label class="col-form-label" for="salutation">Anrede</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                        <select class="custom-select" name="salutation" id="salutation" required>
-                                            <option>Bitte auswählen</option>
-                                            <option value="2">Frau</option>
-                                            <option value="1">Herr</option>
-                                            <option value="0">keine</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie ein Anrede an
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 pl-0 pl-md-3">
-                                        <label class="col-form-label" for="titel">Titel</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pr-md-0">
-                                        <input class="form-control" type="text" name="titel" id="titel" value=""/>
-                                    </div>
+                            <div class="row align-items-center mt-4 validate">
+                                <div class="col-md-1 pl-0">
+                                    <label class="col-form-label" for="vorname">Vorname</label>
                                 </div>
-                                <div class="row align-items-center mt-4">
-                                    <div class="col-md-1 pl-0">
-                                        <label class="col-form-label" for="prename">Vorname</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                        <input class="form-control" class="form-control" type="text" name="pername" id="prename" value="" required/>
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie Ihren Vornamen ein
-                                        </div>
-                                    </div>                                  
-                                    <div class="col-md-2 pl-0 pl-md-3">
-                                        <label class="col-form-label" for="surname">Nachname</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pr-md-0">
-                                        <input class="form-control" type="text" name="surname" id="surname" value="" required/>
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie Ihren Nachnamen ein
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mt-4">
-                                    <div class="col-md-1 pl-0">
-                                        <label class="col-form-label" for="steet">Strasse</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                        <input class="form-control" type="text" name="street" id="street" value="" required/>
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie eine Straße an
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 pl-0 pl-md-3">
-                                        <label class="col-form-label" for="housenumber">Hausnummer</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pr-md-0">
-                                        <input class="form-control" type="text" name="housenumber" id="housenumber" value="" required />
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie eine Hausnummer an
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mt-4">
-                                    <div class="col-md-1 pl-0">
-                                        <label class="col-form-label" for="postalcode">PLZ</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                        <input class="form-control" type="text" name="postalcode" id="postalcode" value="" required/>
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie eine Postleitzahl an
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 pl-0 pl-md-3">
-                                        <label class="col-form-label" for="place">Ort</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pr-md-0">
-                                        <input class="form-control" type="text" name="place" id="place" value="" required/>
-                                        <div class="invalid-feedback">
-                                            Bitte geben Sie einen Ort an
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mt-4">
-                                    <div class="col-md-1 pl-0">
-                                        <label class="col-form-label" for="country">Land</label>
-                                    </div>
-                                    <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
-                                        <input class="form-control" type="text" name="country" id="country" value="DE" />
-                                    </div> 
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="tab" style="display:none">
-                        <div class="row mt-4">
-                            <h5>Zahlungsarten</h5>
-                        </div>
-                        <div class="row align-items-center mt-4 validate">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons"  id="validationMessage" required>
-                                <label class=" btn btn-lg btn-outline-secondary" for="sepa">
-                                    <input type="radio" name="paymenttype" id="sepa" value="sepa" autocomplete="off" onClick="inputIBAN();" required> <img src="https://secure.spendenbank.de/form//public/img/SepaLogoDe.png" style="height:15px;" />
-                                </label>
-                                <label class="btn btn-lg btn-outline-secondary" for="pp">
-                                    <input type="radio" name="paymenttype" id="pp" value="pp" autocomplete="off" onClick="inputIBAN();" required> <img src="https://secure.spendenbank.de/form//public/img/paypal.png" style="height:15px;" />
-                                </label>
-                            </div>
-                            <input type="radio" class="row custom-control-input" id="customControlValidation" name="paymenttype" style="display:none" required>
-                            <div class="invalid-feedback">
-                                Bitte wählen Sie eine Zahlungsart
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-4" id="inputIBAN" style="display:none">
-                            <div class="col-md-1 pl-0">
-                                <label for="iban">IBAN</label>
-                            </div>
-                            <div class="col-md-4 pl-0">
-                                <input type="text" class="form-control" name="sepa_data[iban]" id="iban" required/>
-                                    <small>(max. 5.000,00&euro;)</small>
+                                <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
+                                    <input class="form-control" type="text" name="vorname" id="vorname" value="" required />
                                     <div class="invalid-feedback">
-                                        Bitte geben Sie eine IBAN an
+                                        Bitte geben Sie Ihren Vornamen ein
                                     </div>
+                                </div>
+                                <div class="col-md-2 pl-0 pl-md-3">
+                                    <label class="col-form-label" for="nachname">Nachname</label>
+                                </div>
+                                <div class="col-md-4 pl-0 pr-md-0">
+                                    <input class="form-control" type="text" name="nachname" id="nachname" value="" required />
+                                    <div class="invalid-feedback">
+                                        Bitte geben Sie Ihren Nachnamen ein
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-4 validate" id="emailCheck">
+                                <div class="col-md-1 pl-0">
+                                    <label class="col-form-label" for="email">Email</label>
+                                </div>
+                                <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
+                                    <input class="form-control" type="text" name="email" id="email" value="" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required />
+                                    <div class="invalid-feedback">
+                                        Bitte geben Sie eine gültige E-Mail Adresse an
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-4">
+                                <div class="col-md-3 pl-0">
+                                    <label for="input_get_quittung">Spendenquittung</label>
+                                </div>
+                                <div class="col-md-2 pl-0 pl-md-3 pr-3 pr-md-0">
+                                    <select class="custom-select" name="quittung" id="input_get_quittung" onchange="toggleAddressData(id);">
+                                        <option value="ja" data-value="1">ja</option>
+                                        <option value="nein" data-value="0">nein</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 pl-0 mt-1">
+                                    <small>Ab 50€ möglich. Bis 200€ genügt der Kontoauszug zur Vorlage beim
+                                            Finanzamt
+                                    </small>
+                                </div>
+                            </div>
+                            <div id="masterData">
+                                <div class="align-items-center mt-4 validate" id="addressData">
+                                    <div class="row align-items-center mt-"4 >
+                                        <div class="col-md-1 pl-0">
+                                            <label class="col-form-label" for="Anrede">Anrede</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
+                                            <select class="custom-select" name="Anrede" id="Anrede" required>
+                                                <option>Bitte auswählen</option>
+                                                <option value="2">Frau</option>
+                                                <option value="1">Herr</option>
+                                                <option value="0">keine</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Bitte geben Sie eine Anrede an
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 pl-0 pl-md-3">
+                                            <label class="col-form-label" for="titel">Titel</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pr-md-0">
+                                            <input class="form-control" type="text" name="titel" id="titel" value=""/>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center mt-4">
+                                        <div class="col-md-1 pl-0">
+                                            <label class="col-form-label" for="strasse">Strasse</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
+                                            <input class="form-control" type="text" name="strasse" id="strasse" value="" required/>
+                                            <div class="invalid-feedback">
+                                                Bitte geben Sie eine Straße an
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 pl-0 pl-md-3">
+                                            <label class="col-form-label" for="hausnummer">Hausnummer</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pr-md-0">
+                                            <input class="form-control" type="text" name="hausnummer" id="hausnummer" value="" required />
+                                            <div class="invalid-feedback">
+                                                Bitte geben Sie eine Hausnummer an
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center mt-4">
+                                        <div class="col-md-1 pl-0">
+                                            <label class="col-form-label" for="plz">PLZ</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
+                                            <input class="form-control" type="text" name="plz" id="plz" value="" required/>
+                                            <div class="invalid-feedback">
+                                                Bitte geben Sie eine Postleitzahl an
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 pl-0 pl-md-3">
+                                            <label class="col-form-label" for="ort">Ort</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pr-md-0">
+                                            <input class="form-control" type="text" name="ort" id="ort" value="" required/>
+                                            <div class="invalid-feedback">
+                                                Bitte geben Sie einen Ort an
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center mt-4">
+                                        <div class="col-md-1 pl-0">
+                                            <label class="col-form-label" for="land">Land</label>
+                                        </div>
+                                        <div class="col-md-4 pl-0 pl-md-3 pr-3 pr-md-0">
+                                            <input class="form-control" type="text" name="land" id="land" value="DE" />
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="tab" style="display:none">
+                            <div class="row mt-4">
+                                <h5>Zahlungsarten</h5>
+                            </div>
+                            <div class="row align-items-center mt-4 validate">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons"  id="validationMessage" required>
+                                    <label class=" btn btn-lg btn-outline-secondary" for="sepa">
+                                        <input type="radio" name="zahlungsart" id="sepa" value="sepa" autocomplete="off" onClick="inputIBAN();" required> <img src="https://secure.spendenbank.de/form//public/img/SepaLogoDe.png" style="height:15px;" />
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-secondary" for="pp">
+                                        <input type="radio" name="zahlungsart" id="pp" value="pp" autocomplete="off" onClick="inputIBAN();" required> <img src="https://secure.spendenbank.de/form//public/img/paypal.png" style="height:15px;" />
+                                    </label>
+                                </div>
+                                <input type="radio" class="row custom-control-input" id="customControlValidation" name="zahlungsart" style="display:none" required>
+                                <div class="invalid-feedback">
+                                    Bitte wählen Sie eine Zahlungsart
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-4" id="inputIBAN" style="display:none">
+                                <div class="col-md-1 pl-0">
+                                    <label for="iban">IBAN</label>
+                                </div>
+                                <div class="col-md-4 pl-0">
+                                    <input type="text" class="form-control" name="sepa_data[iban]" id="iban" required/>
+                                        <small>(max. 5.000,00&euro;)</small>
+                                        <div class="invalid-feedback">
+                                            Bitte geben Sie eine IBAN an
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4 custom-control custom-checkbox">
+                                <input type="hidden" name="kommentar" value="" />
+                                <input type="checkbox" class="custom-control-input" name="kommentar" id="kommentar" value="newsletter" >
+                                <label class="custom-control-label" for="kommentar">
+                                    Ich möchte den Newsletter mit Informationen rund um die Ev. Stiftung
+                                    Alsterdorf erhalten und stimme den <a href=https://www.alsterdorf.de/footer/datenschutz.html target="_blank"
+                                    style="color: #2a2c2e; text-decoration: underline;">Datenschutzbestimmungen</a> zu.
+                                </label>
+                            </div>
+                            <div class="row mt-2 custom-control custom-checkbox validate">
+                                <input type="hidden" name="security_ip" value="" />
+                                <input type="checkbox" class="custom-control-input" name="security_ip" id="security_ip" value="1" required>
+                                <label class="custom-control-label" for="security_ip">
+                                    Die <a href="https://secure.spendenbank.de/login/datenschutz/?form=2170&amp;lang=1" target="_blank"
+                                        style="color: #2a2c2e; text-decoration: underline;">Datenschutzerklärung</a> zur Nutzung des vorliegenden
+                                    Online-Spendentools habe ich gelesen und zur Kenntnis genommen.
+                                </label>
+                                <div class="invalid-feedback">
+                                    Bitte akzeptieren Sie die Datenschutzbestimmungen
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row align-items-center">
+                            <div class="col-md-2 pl-0" style="display:none" id="prevBtn">
+                                <button class="btn btn-secondary mt-4" type="button" onclick="nextPrev(-1)">Zuürck</button>
+                            </div>
+                            <div class="col-md-1 pl-0" id="nextBtn">
+                                <button class="btn btn-primary mt-4" type="button" onclick="nextPrev(1)">Weiter</button>
+                            </div>
+                            <div class="col-md-3 pl-0" style="display:none" id="submitBtn">
+                                <button class="btn btn-success mt-4" type="submit" id="submitForm" >Jetzt spenden</button>
                             </div>
                         </div>
-                        <div class="row mt-4 custom-control custom-checkbox">
-                            <input type="hidden" name="checkbox" value="" />
-                            <input type="checkbox" class="custom-control-input" name="checkbox" id="newsletter" value="1" >
-                            <label class="custom-control-label" for="newsletter">
-                                Ich möchte den Newsletter mit Informationen rund um die Ev. Stiftung
-                                Alsterdorf erhalten und stimme den <a href=https://www.alsterdorf.de/footer/datenschutz.html target="_blank"
-                                style="color: #2a2c2e; text-decoration: underline;">Datenschutzbestimmungen</a> zu.
-                            </label>
-                        </div>
-                        <div class="row mt-2 custom-control custom-checkbox validate">
-                            <input type="hidden" name="security_ip" value="" />
-                            <input type="checkbox" class="custom-control-input" name="security_ip" id="security_ip" value="1" required>
-                            <label class="custom-control-label" for="security_ip">
-                                Die <a href="https://secure.spendenbank.de/login/datenschutz/?form=2170&amp;lang=1" target="_blank"
-                                    style="color: #2a2c2e; text-decoration: underline;">Datenschutzerklärung</a> zur Nutzung des vorliegenden
-                                Online-Spendentools habe ich gelesen und zur Kenntnis genommen.
-                            </label>
-                            <div class="invalid-feedback">
-                                Bitte akzeptieren Sie die Datenschutzbestimmungen
-                            </div>
-                        </div>
-                    </fieldset>
-                    <div class="row align-items-center">
-                        <div class="col-md-2 pl-0" style="display:none" id="prevBtn">
-                            <button class="btn btn-secondary mt-4" type="button" onclick="nextPrev(-1)">Zuürck</button>
-                        </div>
-                        <div class="col-md-1 pl-0" id="nextBtn">
-                            <button class="btn btn-primary mt-4" type="button" onclick="nextPrev(1)">Weiter</button>
-                        </div>
-                        <div class="col-md-3 pl-0" style="display:none" id="submitBtn">
-                            <button class="btn btn-success mt-4" type="submit">Jetzt spenden</button>
-                        </div>
-                    </div>
-                    <div style="text-align:center;margin-top:40px;">
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-2">
-                One of three columns
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous">
-    </script>
-    <script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous">
+        </script>
+        <script>
 
-        const showTab = (n) => {
-            // This function will display the specified tab of the form ...
-            const x = document.getElementsByClassName("tab");
-            x[n].style.display = "block";
-            // ... and fix the Previous/Next buttons:
-            if (n == 0) {
-                document.getElementById("prevBtn").style.display = "none";
-                let i = 1
-                while (i < x.length) {
-                    x[i].style.display = "none";
-                    i++
+            // Display specified tab of the form and fix the previous/next buttons:
+            const showTab = (n) => {
+                const x = document.getElementsByClassName("tab");
+                x[n].style.display = "block";
+                if (n == 0) {
+                    document.getElementById("prevBtn").style.display = "none";
+                    let i = 1
+                    while (i < x.length) {
+                        x[i].style.display = "none";
+                        i++
+                    }
+                } else {
+                    document.getElementById("prevBtn").style.display = "inline";
+                    let i = 1
+                    while (0 <= (n - i)) {
+                        x[n - i].style.display = "none";
+                        i++
+                    }
+                    while ((n + i) <= x.length - 1) {
+                        x[n + i].style.display = "none";
+                        i++
+                    }
                 }
-            } else {
-                document.getElementById("prevBtn").style.display = "inline";
-                let i = 1
-                while (0 <= (n - i)) {
-                    x[n - i].style.display = "none";
-                    i++
-                }
-                while ((n + i) <= x.length - 1) {
-                    x[n + i].style.display = "none";
-                    i++
+                if (n == (x.length - 1)) {
+                    document.getElementById("submitBtn").style.display = "inline";
+                    document.getElementById("nextBtn").style.display = "none";
+
+                } else {
+                    document.getElementById("nextBtn").style.display = "inline";
                 }
             }
-            if (n == (x.length - 1)) {
-                document.getElementById("submitBtn").style.display = "inline";
-                document.getElementById("nextBtn").style.display = "none";
 
-            } else {
+            let currentTab = 0; // Current tab is set to be the first tab (0) 
+
+            showTab(currentTab); // Display the current tab
+
+            let btnCounter = 0; // Count how often the buttons have been clicked
+
+            // Define current tab and enable/disable next, previous and submit buttons
+            const nextPrev = (n) => {
+                btnCounter++
+                let x = document.getElementsByClassName("tab");
+                if (n === 1 && !validateForm()) return false;
+                if (currentTab === 0) setOpenVZ();
+                x[currentTab].style.display = "none";
+                currentTab = currentTab + n;
+                document.getElementById("submitBtn").style.display = "none";
                 document.getElementById("nextBtn").style.display = "inline";
+                document.getElementById("prevBtn").style.display = "inline";
+                showTab(currentTab);
             }
-        }
 
-        let currentTab = 0; // Current tab is set to be the first tab (0)
+            // Check own amount radio button if amount input box gets focus
+            const checkRadioBtn = () => {
+                document.getElementById("amount_own_radio").checked = true
+            }
 
-        showTab(currentTab); // Display the current tab
+            // Assign valie of amount input box to own amount radio button
+            const changeRadioValue = () => {
+                const x = document.getElementById("amount_own_radio");
+                const y = document.getElementById("amount_own").value.replace(".","")
+                if (validateAmount()) x.value = y
+                }
 
-        const nextPrev = (n) => {
-            // This function will figure out which tab to display
-            let x = document.getElementsByClassName("tab");
-            if (n == 1 && !validateForm()) return false;
-            // Hide the current tab:
-            x[currentTab].style.display = "none";
-            // Increase or decrease the current tab by 1:  
-            currentTab = currentTab + n;
-            document.getElementById("submitBtn").style.display = "none";
-            document.getElementById("nextBtn").style.display = "inline";
-            document.getElementById("prevBtn").style.display = "inline";
-            // Otherwise, display the correct tab:
-            showTab(currentTab);
-        }
+            // Clear amount input box and enable validation of radio buttons again after amount input and after first run
+            const clearAmountInput = () => {
+                if (document.getElementById("amount_own").value)
+                    {document.getElementById("amount_own").value = ""
+                    }
+                if (btnCounter > 0 && document.getElementById("amountInput").classList.contains('was-validated') ===  false)
+                    {document.getElementById("amountInput").classList.add('was-validated')
+                    Array.from(document.getElementsByName("betrag")).forEach(
+                        function (element, index, array) {
+                            element.classList.remove("is-invalid")
+                            }   
+                        )
+                    }
+                }
 
-        const validateForm = () => {
             // This function deals with validation of the form fields
-            let valid = true;
-            const x = document.getElementsByClassName("tab");
-            const z = x[currentTab].getElementsByClassName("validate");
-            for (let e of z) {
-                e.classList.add('was-validated')
-                let y = e.getElementsByTagName("input")
-                for (let el of y) {
-                    console.log(el)
-                    if (el.id === "email" && !validateEmail(el.value)) {
-                        document.getElementById("emailCheck").classList.remove('was-validated')
-                        el.classList.add('is-invalid')
-                        valid = false
+            const validateForm = () => {
+                let valid = true;
+                const x = document.getElementsByClassName("tab");
+                const z = x[currentTab].getElementsByClassName("validate");
+                for (let e of z) {
+                    e.classList.add('was-validated')
+                    let y = e.getElementsByTagName("input")
+                    for (let el of y) {
+                        el.classList.remove("is-invalid")
+                        if (el.id === "amount_own" && document.getElementById("amount_own_radio").checked && !validateAmount()) {
+                            valid = false
+                        }
+                        //else if (el.id === "iban" && !validateIban(el.value)) {
+                        //    document.getElementById("inputIBAN").classList.remove('was-validated')
+                        //    el.classList.add('is-invalid')
+                        //    valid = false;
+                        //}                 
+                        else if (el.checkValidity() === false)  {
+                            valid = false
+                        }
+                        else el.classList.remove('is-invalid')                            
                     }
-                    //else if (el.id === "iban" && !validateIban(el.value)) {
-                    //    document.getElementById("inputIBAN").classList.remove('was-validated')
-                    //    el.classList.add('is-invalid')
-                    //    console.log("iban shit")
-                    //    valid = false;
-                    //}
-                    else if (el.checkValidity() === false) {
-                        el.classList.remove('was-validated')
-                        el.classList.add('is-invalid')
-                        valid = false
-                    }
-                    else el.classList.remove('is-invalid')
                 }
+                return valid
             }
-            return valid
-        }
 
-        const validateEmail = (email) => {
-            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-                return (true)
+            //Validation of entered amount
+            const validateAmount = () => {
+                const x = parseFloat(document.getElementById("amount_own").value.replace(".", "").replace(",","."))
+                if (x >= 1 && x <= 5000)
+                    { return true }
+                else        
+                    document.getElementById("amountInput").classList.remove('was-validated')
+                    document.getElementById("amount_own").classList.add("is-invalid")
+                    Array.from(document.getElementsByName("betrag")).forEach(
+                        function (element, index, array) {
+                            element.classList.add("is-invalid")
+                        }
+                    )
+                    return false
             }
-            return (false)
-        }
 
-        const validateIban = (value) => {
-            let rearrange =
-                value.substring(4, value.length)
-                + value.substring(0, 4);
-            let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-            let alphaMap = {};
-            let number = [];
-
-            alphabet.forEach((value, index) => {
-                alphaMap[value] = index + 10;
-            });
-
-            rearrange.split('').forEach((value, index) => {
-                number[index] = alphaMap[value] || value;
-            });
-
-            return modulo(number.join('').toString(), 97) === 1;
-        }
-
-        const modulo = (aNumStr, aDiv) => {
-            var tmp = "";
-            var i, r;
-            for (i = 0; i < aNumStr.length; i++) {
-                tmp += aNumStr.charAt(i);
-                r = tmp % aDiv;
-                tmp = r.toString();
+            //Make sute the form only gets send once it is valid
+            const validateSubmit = () => {
+                if (!validateForm())
+                  event.preventDefault()
             }
-            return tmp / 1;
-        }
 
-        const toggleEntity = (id) => {
-            if (id === "person_radio") {
-                document.getElementById("firmendaten").style.display = 'none';
-                document.getElementById("firmendaten").classList.remove("validate");
-            }      
-            else {
-                document.getElementById("firmendaten").style.display = 'flex';
-                document.getElementById("firmendaten").classList.add("validate");
-            }
-        }
-
-        const toggleAddressData = (id) => {
-            const e = document.getElementById(id)
-            if (e.options[e.selectedIndex].value === "nein") {
-                document.getElementById("masterData").style.display = 'none';
-                document.getElementById("addressData").classList.remove("validate");
-            }
-            else {
-                document.getElementById("masterData").style.display = 'block'
-                document.getElementById("addressData").classList.add("validate");
-            }
-        }
-
-        const inputIBAN = () => {
-            if (document.getElementById("sepa").checked) {
-                document.getElementById("inputIBAN").style.display = 'flex';
-                document.getElementById("inputIBAN").classList.add("validate");
-                }
-            else if (document.getElementById("pp").checked) {
-                document.getElementById("inputIBAN").style.display = 'none';
-                document.getElementById("inputIBAN").classList.remove("validate");
-                }
-        }
-
-        let dropdown = document.getElementById('verwendungszweck');
-        dropdown.length = 0;
-
-        fetch('vwz.json')
-                .then(response => response.json())
-                .then(data => {
-                    let option;
-                    for (let i = 0; i < data.verwendungszwecke.length; i++) {
-                        option = document.createElement('option');
-                        option.text = data.verwendungszwecke[i].vzs.val;
-                        option.value = data.verwendungszwecke[i].vzs.key;
-                        dropdown.add(option);
-                    }
+            //Validates the correct format of the entered IBAN
+            const validateIban = (value) => {
+                let rearrange =
+                    value.substring(4, value.length)
+                    + value.substring(0, 4);
+                let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+                let alphaMap = {};
+                let number = [];
+                alphabet.forEach((value, index) => {
+                    alphaMap[value] = index + 10;
                 });
-        
-        const toggleVWZ = (id) => {
-            const e = document.getElementById(id)
-                if (e.options[e.selectedIndex].value === "22697") {
-                    document.getElementById("vwz_open").style.display = 'flex';
-                    document.getElementById("vwz_open").classList.add("validate");
+                rearrange.split('').forEach((value, index) => {
+                    number[index] = alphaMap[value] || value;
+                });
+                return modulo(number.join('').toString(), 97) === 1;
+            }
+
+            const modulo = (aNumStr, aDiv) => {
+                var tmp = "";
+                var i, r;
+                for (i = 0; i < aNumStr.length; i++) {
+                    tmp += aNumStr.charAt(i);
+                    r = tmp % aDiv;
+                    tmp = r.toString();
+                }
+                return tmp / 1;
+            }
+
+            // Toggles person/firma
+            const toggleEntity = (id) => {
+                if (id === "person_radio") {
+                    document.getElementById("firmendaten").style.display = 'none';
+                    document.getElementById("firmendaten").classList.remove("validate");
+                }      
+                else {
+                    document.getElementById("firmendaten").style.display = 'flex';
+                    document.getElementById("firmendaten").classList.add("validate");
+                }
+            }
+
+            // Toggles the address data if a donation receipt is needed
+            const toggleAddressData = (id) => {
+                const e = document.getElementById(id)
+                if (e.options[e.selectedIndex].value === "nein") {
+                    document.getElementById("masterData").style.display = 'none';
+                    document.getElementById("addressData").classList.remove("validate");
                 }
                 else {
-                    document.getElementById("vwz_open").style.display = 'none';
-                    document.getElementById("vwz_open").classList.remove("validate");
+                    document.getElementById("masterData").style.display = 'block'
+                    document.getElementById("addressData").classList.add("validate");
                 }
             }
 
-        const handleSubmit = async (e) => {
-                e.preventDefault();
-                let x = Object.fromEntries(new FormData(e.target))
-                if (validateForm()) {
-                    const body = JSON.stringify(x, function replacer(key, value) {
-                        if (key == "entity") return undefined;
-                        else return value;
+            // Toggles input for IBAN if sepa is selected as payment method
+            const inputIBAN = () => {
+                if (document.getElementById("sepa").checked) {
+                    document.getElementById("inputIBAN").style.display = 'flex';
+                    document.getElementById("inputIBAN").classList.add("validate");
+                    }
+                else if (document.getElementById("pp").checked) {
+                    document.getElementById("inputIBAN").style.display = 'none';
+                    document.getElementById("inputIBAN").classList.remove("validate");
+                    }
+            }
+
+            // Get donation purpose from API and display in select input fiels
+            let dropdown = document.getElementById('verwendungszweck');
+            dropdown.length = 0;
+
+            fetch('vwz.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        let option;
+                        for (let i = 0; i < data.verwendungszwecke.length; i++) {
+                            option = document.createElement('option');
+                            option.text = data.verwendungszwecke[i].vzs.val;
+                            option.value = data.verwendungszwecke[i].vzs.key;
+                            dropdown.add(option);
+
+                        }
                     });
-                    const res = await postForm(body);
-                    const data = await res.json();
-                    console.log(data.json);
+            
+            // Toggle input field for entry of own donation purpose 
+            const toggleVWZ = (id) => {
+                const e = document.getElementById(id)
+                    if (e.options[e.selectedIndex].value === "22697") {
+                        document.getElementById("vwz_open").style.display = 'flex';
+                        document.getElementById("donation_openvz").required = true;
+
+                    }
+                    else {
+                        document.getElementById("vwz_open").style.display = 'none';
+                        document.getElementById("donation_openvz").required = false;
+                    }
                 }
-                showTab(currentTab);
-            };
-
-        const form = document.forms.donationForm;
-        
-        form.addEventListener('submit', handleSubmit);
-
-        const postForm = body => {
-            return fetch('https://httpbin.org/post', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body
-            });
-        };
-
-        document.getElementById("donationForm").onkeypress = function (e) {
-            var key = e.charCode || e.keyCode || 0;
-            if (key == 13) {
-                e.preventDefault();
+            // Set own donation purpose
+            const setOpenVZ = () => {
+                const el = document.getElementById("verwendungszweck")
+                const opt = el.options[el.selectedIndex];
+                if (opt.text === "Offener Verwendungszweck") {
+                        opt.value = document.getElementById("donation_openvz").value
+                    }                 
             }
-        }
-                                 
-    </script>
-</body>
+
+            //For debugging: Submit form data as JSON to console
+        //    const handleSubmit = async (e) => {
+        //            e.preventDefault();
+        //            let x = Object.fromEntries(new FormData(e.target))
+        //            if (validateForm()) {
+        //                const body = JSON.stringify(x, function replacer(key, value) {
+        //                    if (key == "entity") return undefined;
+        //                    else return value;
+        //                });
+        //                const res = await postForm(body);
+        //                const data = await res.json();
+        //                console.log(data.json);
+        //            }
+        //            showTab(currentTab);
+        //        };
+        //    const form = document.forms.donationForm;
+        //         form.addEventListener('submit', handleSubmit);
+        //         const postForm = body => {
+        //             return fetch('https://httpbin.org/post', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json'
+        //                 },
+        //                 body
+        //             });
+        //         };
+
+            //Disable form submssion upon pressing enter
+            document.getElementById("donationForm").onkeypress = function (e) {
+                var key = e.charCode || e.keyCode || 0;
+                if (key == 13) {
+                e.preventDefault();
+                }
+            }   
+                                    
+        </script>
+    </body>
 
 </html>
 
