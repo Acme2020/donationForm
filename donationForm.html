@@ -14,10 +14,10 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="container-fluid ml-1">
             <div class="row">
                 <div class="col-md-12 ml-3 ml-md-0">
-                    <form name="donatioForm" id="donationForm" class="needs-validation" novalidate onsubmit="return validateForm()" method="post" target="_blank" action="https://secure.spendenbank.de/bfs-net/api/" >
+                    <form name="donatioForm" id="donationForm" class="needs-validation" novalidate onsubmit="return validateForm()" method="post" action="https://secure.spendenbank.de/bfs-net/api/" >
                         <input type="hidden" name="ret_success_url" value="https://www.alsterdorf.de/" />
                         <input type="hidden" name="ret_error_url" value="https://www.marvel.com/404" />
                         <input type="hidden" name="oid" value="" />
@@ -92,7 +92,7 @@
                                     <label for="donation_openvz">Eigener Verwendungszweck</label>
                                     <input class="form-control" type="text" name="donation_openvz" id="donation_openvz" value="" />
                                     <div class="invalid-feedback">
-                                        Bitte geben Sie einen verwendungszweck an
+                                        Bitte geben Sie einen Verwendungszweck an
                                     </div>
                                 </div>
                             </div>   
@@ -102,7 +102,7 @@
                                 <h5>Adressdaten</h5>
                             </div>
                             <div class="row align-items-center mt-4">
-                                <div class="col-md-1 custom-control custom-radio">
+                                <div class="col-md-2 custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="person_radio" name="entity" checked="checked"
                                         onclick="toggleEntity(id);">
                                     <label class="custom-control-label" for="person_radio"> Person</label>
@@ -288,7 +288,6 @@
                                 </div>
                             </div>
                             <div class="row mt-4 custom-control custom-checkbox">
-                                <input type="hidden" name="kommentar" value="" />
                                 <input type="checkbox" class="custom-control-input" name="kommentar" id="kommentar" value="newsletter" >
                                 <label class="custom-control-label" for="kommentar">
                                     Ich möchte den Newsletter mit Informationen rund um die Ev. Stiftung
@@ -311,13 +310,20 @@
                         </fieldset>
                         <div class="row align-items-center">
                             <div class="col-md-2 pl-0" style="display:none" id="prevBtn">
-                                <button class="btn btn-secondary mt-4" type="button" onclick="nextPrev(-1)">Zuürck</button>
+                                <button class="btn btn-secondary mt-4" type="button" onclick="nextPrev(-1)">Zurück</button>
                             </div>
                             <div class="col-md-1 pl-0" id="nextBtn">
                                 <button class="btn btn-primary mt-4" type="button" onclick="nextPrev(1)">Weiter</button>
                             </div>
                             <div class="col-md-3 pl-0" style="display:none" id="submitBtn">
-                                <button class="btn btn-success mt-4" type="submit" id="submitForm" >Jetzt spenden</button>
+                                <button class="btn btn-success mt-4" type="submit" id="submitForm" onclick="loading()">Jetzt spenden</button>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-2 pl-0">
+                            </div>
+                            <div class="col-md-3 pl-0">
+                                <small class="text-success" id="loadingText" style="visibility:hidden" >Ihre Spende wird getätigt...</small>
                             </div>
                         </div>
                     </form>
@@ -391,6 +397,14 @@
                 document.getElementById("nextBtn").style.display = "inline";
                 document.getElementById("prevBtn").style.display = "inline";
                 showTab(currentTab);
+            }
+
+            // Show loading text while form is being submitted
+            const loading = () => {
+                if (validateForm()) {
+                    document.getElementById("loadingText").style.visibility = "visible";
+                    document.getElementById("submitBtn").disabled = true
+                }
             }
 
             // Check own amount radio button if amount input box gets focus
@@ -606,7 +620,7 @@
                 if (key == 13) {
                 e.preventDefault();
                 }
-            }   
+            }
                                     
         </script>
     </body>
