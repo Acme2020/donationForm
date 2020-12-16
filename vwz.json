@@ -1,132 +1,24 @@
 {
-    "anzahl_vz": 21,
+    "anzahl_vz": 3,
     "verwendungszwecke": [
         {
             "vzs": {
-                "key": "5615",
-                "val": "Da, wo Hilfe am dringendsten ist"
+                "key": "26988",
+                "val": "alsterdorf assistenz ost"
             }
         },
         {
             "vzs": {
-                "key": "25698",
-                "val": "Corona-Hilfsfonds"
+                "key": "26986",
+                "val": "Unterstützte Kommunikation"
             }
         },
         {
             "vzs": {
-                "key": "14233",
-                "val": "Menschen mit Behinderung"
-            }
-        },
-        {
-            "vzs": {
-                "key": "5096",
-                "val": "Lebensraum - Wohnen "
-            }
-        },
-        {
-            "vzs": {
-                "key": "5097",
-                "val": "Kinderwelten"
-            }
-        },
-        {
-            "vzs": {
-                "key": "5099",
-                "val": "Arbeitswelten - Arbeit "
-            }
-        },
-        {
-            "vzs": {
-                "key": "14232",
-                "val": "Gesundheit"
-            }
-        },
-        {
-            "vzs": {
-                "key": "14250",
-                "val": "Bildung"
-            }
-        },
-        {
-            "vzs": {
-                "key": "14102",
-                "val": "Q 8"
-            }
-        },
-        {
-            "vzs": {
-                "key": "18349",
-                "val": "Alsterdorf Assistenz West"
-            }
-        },
-        {
-            "vzs": {
-                "key": "18736",
-                "val": "Alsterdorf Assistenz Ost"
-            }
-        },
-        {
-            "vzs": {
-                "key": "20247",
-                "val": "stadt.mission.mensch"
-            }
-        },
-        {
-            "vzs": {
-                "key": "16652",
-                "val": "KUGEL"
-            }
-        },
-        {
-            "vzs": {
-                "key": "19750",
-                "val": "EinzelfÃ¶rderung"
-            }
-        },
-        {
-            "vzs": {
-                "key": "22752",
-                "val": "Sport und Inklusion"
-            }
-        },
-        {
-            "vzs": {
-                "key": "23366",
-                "val": "alstergÃ¤rtner"
-            }
-        },
-        {
-            "vzs": {
-                "key": "23641",
-                "val": "Das Geschenk von Herzen"
-            }
-        },
-        {
-            "vzs": {
-                "key": "24108",
-                "val": "Stark-fÃ¼r-HH"
-            }
-        },
-        {
-            "vzs": {
-                "key": "24951",
-                "val": "KinderWohnen"
-            }
-        },
-        {
-            "vzs": {
-                "key": "25383",
-                "val": "RumÃ¤nienhilfe allgemein"
-            }
-        },
-        {
-            "vzs": {
-                "key": "22697",
-                "val": "Offener Verwendungszweck"
+                "key": "26987",
+                "val": "DigiContact"
             }
         }
-    ],
-    "offener_vz": "22697"
+        
+    ]
 }
